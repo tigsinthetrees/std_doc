@@ -3,7 +3,7 @@
 PURPOSE
 -------
 
-TODO: Document purpose for module docstring_test_file.py
+Utility for automatically creating the framework for documenting python modules
 
 CLASSES
 -------
@@ -14,13 +14,13 @@ CLASSES
   * - Class Name
     - Purpose
   * - _CodeSection
-    - undocumented
+    - A section of code - intended superseded by inheriting classes
   * - ModuleToDoc
-    - undocumented
+    - Class to write docstring for a module
   * - ClassToDoc
-    - undocumented
+    - Class to write docstring for a class
   * - FnToDoc
-    - undocumented
+    - Class to write docstring for a function
 
 FUNCTIONS
 ---------
@@ -31,7 +31,7 @@ FUNCTIONS
   * - Function Name
     - Purpose
   * - main
-    - undocumented
+    - External interface, allowing program to be run from command line, or executable file
 
 """
 
@@ -40,7 +40,6 @@ import importlib.util
 import inspect
 from os.path import abspath
 from re import search, compile, findall, sub
-import sys
 
 
 class _CodeSection:
@@ -49,7 +48,7 @@ class _CodeSection:
     PURPOSE
     -------
 
-    TODO: Document purpose for class _CodeSection
+    A section of code - intended superseded by inheriting classes
 
     CLASSES
     -------
@@ -60,7 +59,7 @@ class _CodeSection:
       * - Class Name
         - Purpose
       * - _CodeLine
-        - undocumented
+        - A line of code in a section
 
     FUNCTIONS
     ---------
@@ -73,37 +72,37 @@ class _CodeSection:
       * - __init__
         - undocumented
       * - name
-        - undocumented
+        - Dummy function - should be superseded by all inheriting classes
       * - kind
-        - undocumented
+        - Dummy function - should be superseded by all inheriting classes
       * - purpose
-        - undocumented
+        - Purpose documentation
       * - doc
-        - undocumented
+        - Documentation for this section
       * - _standard_body_indentation
-        - undocumented
+        - The standard indentation for the body of this section (i.e line 1 + \t, or line 2)
       * - exported
-        - undocumented
+        - Flag for if the code section has been exported already
       * - _get_header
-        - undocumented
+        - Dummy function - if subclass does not supersede, sets header to None
       * - _base_docs
-        - undocumented
+        - Documentation for subclasses, functions, purpose, and any additional sections added by end user
       * - _doc_sect
-        - undocumented
+        - Formats a section for the docstring with the correct title underline
       * - _f_line
-        - undocumented
+        - Formatted line for output - typically for docstrings
       * - _find_docstr
-        - undocumented
+        - Finds docstring
       * - _parse_docstr
-        - undocumented
+        - Parses docstring to ensure no content is lost, and to identify all existing sections
       * - _split_code
-        - undocumented
+        - Splits code by a keyword (def, class etc)
       * - _find_classes
-        - undocumented
+        - Find sub-classes
       * - _find_fns
-        - undocumented
+        - Finds sub functions
       * - export
-        - undocumented
+        - Readies a code section for export
 
     """
 
@@ -113,8 +112,8 @@ class _CodeSection:
         PARAMETERS
         ----------
 
-        :param =None section_as_text_l: TODO: document description for parameter section_as_text_l
-        :param =None section_as_code_l: TODO: document description for parameter section_as_code_l
+        :param list[str]|None section_as_text_l:  File seperated into a list of lines
+        :param list[_CodeSection._CodeLine]|None section_as_code_l:  Code as list of already instantiated objects
 
         """
 
@@ -147,7 +146,7 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for class _CodeLine
+        A line of code in a section
 
         FUNCTIONS
         ---------
@@ -160,19 +159,19 @@ class _CodeSection:
           * - __init__
             - undocumented
           * - str_free
-            - undocumented
+            - Line, stripped of any strings
           * - raw
-            - undocumented
+            - Line as recorded from the original document
           * - marker
-            - undocumented
+            - Flag of line type
           * - marker
-            - undocumented
+            - Sets flag about line type
           * - indentation
-            - undocumented
+            - Indentation of this line
           * - belongs_to
-            - undocumented
+            - Code section that owns this line
           * - belongs_to
-            - undocumented
+            - Set code section that owns this line
 
         """
 
@@ -182,8 +181,8 @@ class _CodeSection:
             PARAMETERS
             ----------
 
-            :param  text: TODO: document description and type for parameter text
-            :param  owner: TODO: document description and type for parameter owner
+            :param str text:  text as recorded in the document
+            :param _CodeSection owner:  The original owner for the line
 
             """
 
@@ -198,13 +197,13 @@ class _CodeSection:
             PURPOSE
             -------
 
-            TODO: Document purpose for function str_free
+            Line, stripped of any strings
 
             PARAMETERS
             ----------
 
-            :returns: TODO: Document the return for function str_free
-            :rtype: TODO: Document return type for function str_free
+            :returns: Line of the document
+            :rtype: str
 
             """
 
@@ -220,13 +219,13 @@ class _CodeSection:
             PURPOSE
             -------
 
-            TODO: Document purpose for function raw
+            Line as recorded from the original document
 
             PARAMETERS
             ----------
 
-            :returns: TODO: Document the return for function raw
-            :rtype: TODO: Document return type for function raw
+            :returns: Line of the document
+            :rtype: str
 
             """
 
@@ -239,13 +238,13 @@ class _CodeSection:
             PURPOSE
             -------
 
-            TODO: Document purpose for function marker
+            Flag of line type
 
             PARAMETERS
             ----------
 
-            :returns: TODO: Document the return for function marker
-            :rtype: TODO: Document return type for function marker
+            :returns: "header", "body" or "docs"
+            :rtype: str
 
             """
 
@@ -258,12 +257,12 @@ class _CodeSection:
             PURPOSE
             -------
 
-            TODO: Document purpose for function marker
+            Sets flag about line type
 
             PARAMETERS
             ----------
 
-            :param  new_marker: TODO: document description and type for parameter new_marker
+            :param str new_marker:  "header", "body" or "docs"
 
             """
 
@@ -276,13 +275,13 @@ class _CodeSection:
             PURPOSE
             -------
 
-            TODO: Document purpose for function indentation
+            Indentation of this line
 
             PARAMETERS
             ----------
 
-            :returns: TODO: Document the return for function indentation
-            :rtype: TODO: Document return type for function indentation
+            :returns: Whitespaces preceding the text
+            :rtype: str
 
             """
 
@@ -298,13 +297,13 @@ class _CodeSection:
             PURPOSE
             -------
 
-            TODO: Document purpose for function belongs_to
+            Code section that owns this line
 
             PARAMETERS
             ----------
 
-            :returns: TODO: Document the return for function belongs_to
-            :rtype: TODO: Document return type for function belongs_to
+            :returns: Code section that owns this object
+            :rtype: _CodeSection
 
             """
 
@@ -317,12 +316,12 @@ class _CodeSection:
             PURPOSE
             -------
 
-            TODO: Document purpose for function belongs_to
+            Set code section that owns this line
 
             PARAMETERS
             ----------
 
-            :param  new_owner: TODO: document description and type for parameter new_owner
+            :param _CodeSection new_owner:  owner of this line
 
             """
 
@@ -335,13 +334,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function name
+        Dummy function - should be superseded by all inheriting classes
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function name
-        :rtype: TODO: Document return type for function name
+        :returns: "unknown"
+        :rtype: str
 
         """
 
@@ -354,13 +353,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function kind
+        Dummy function - should be superseded by all inheriting classes
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function kind
-        :rtype: TODO: Document return type for function kind
+        :returns: "unknown"
+        :rtype: str
 
         """
 
@@ -373,13 +372,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function purpose
+        Purpose documentation
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function purpose
-        :rtype: TODO: Document return type for function purpose
+        :returns: Just the purpose documentation for this section
+        :rtype: str
 
         """
 
@@ -397,13 +396,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function doc
+        Documentation for this section
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function doc
-        :rtype: TODO: Document return type for function doc
+        :returns: Documentation with sections PURPOSE, CLASSES, FUNCTIONS and any additional documentation
+        :rtype: str
 
         """
 
@@ -417,13 +416,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _standard_body_indentation
+        The standard indentation for the body of this section (i.e. line 1 + \t, or line 2)
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function _standard_body_indentation
-        :rtype: TODO: Document return type for function _standard_body_indentation
+        :returns: whitespaces of the standard indentation
+        :rtype: str
 
         """
 
@@ -439,13 +438,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function exported
+        Flag for if the code section has been exported already
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function exported
-        :rtype: TODO: Document return type for function exported
+        :returns: true if section has been exported
+        :rtype: bool
 
         """
 
@@ -457,7 +456,7 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _get_header
+        Dummy function - if subclass does not supersede, sets header to None
 
         """
 
@@ -469,13 +468,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _base_docs
+        Documentation for subclasses, functions, purpose, and any additional sections added by end user
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function _base_docs
-        :rtype: TODO: Document return type for function _base_docs
+        :returns: purpose documentation, class documentation, fn documentation, additional documentation
+        :rtype: tuple[str]
 
         """
 
@@ -517,15 +516,15 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _doc_sect
+        Formats a section for the docstring with the correct title underline
 
         PARAMETERS
         ----------
 
-        :param  heading: TODO: document description and type for parameter heading
-        :param  contents: TODO: document description and type for parameter contents
-        :returns: TODO: Document the return for function _doc_sect
-        :rtype: TODO: Document return type for function _doc_sect
+        :param str heading:  section header
+        :param str contents:  section contents
+        :returns: formatted section
+        :rtype: str
 
         """
 
@@ -540,14 +539,14 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _f_line
+        Formatted line for output - typically for docstrings
 
         PARAMETERS
         ----------
 
-        :param  contents: TODO: document description and type for parameter contents
-        :returns: TODO: Document the return for function _f_line
-        :rtype: TODO: Document return type for function _f_line
+        :param str contents:  text to format - should be stripped before passing in
+        :returns: formatted line
+        :rtype: str
 
         """
 
@@ -559,7 +558,7 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _find_docstr
+        Finds docstring
 
         """
 
@@ -586,7 +585,7 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _parse_docstr
+        Parses docstring to ensure no content is lost, and to identify all existing sections
 
         """
 
@@ -620,14 +619,14 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _split_code
+        Splits code by a keyword (def, class etc)
 
         PARAMETERS
         ----------
 
-        :param  search_term: TODO: document description and type for parameter search_term
-        :returns: TODO: Document the return for function _split_code
-        :rtype: TODO: Document return type for function _split_code
+        :param re.Pattern search_term:  keyword to split code by
+        :returns: Split code
+        :rtype: list[list[_CodeSection._CodeLine]]
 
         """
 
@@ -650,7 +649,7 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _find_classes
+        Find sub-classes
 
         """
 
@@ -663,7 +662,7 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function _find_fns
+        Finds sub functions
 
         """
 
@@ -676,13 +675,13 @@ class _CodeSection:
         PURPOSE
         -------
 
-        TODO: Document purpose for function export
+        Readies a code section for export
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function export
-        :rtype: TODO: Document return type for function export
+        :returns: documentation and section code
+        :rtype: str
 
         """
 
@@ -706,7 +705,7 @@ class ModuleToDoc(_CodeSection):
     PURPOSE
     -------
 
-    TODO: Document purpose for class ModuleToDoc
+    Class to write docstring for a module
 
     PARENT CLASS
     ------------
@@ -724,17 +723,16 @@ class ModuleToDoc(_CodeSection):
       * - __init__
         - undocumented
       * - name
-        - undocumented
+        - Name of the module (file name)
       * - kind
-        - undocumented
+        - Returns "module"
       * - export
-        - undocumented
+        - Rewrite the file with the docstring changes
 
-    TEMP NOTES
-    ----------
+    PARENT CLASS
+    ------------
 
-    TODO: move these notes into a section with a header
-    Class to write docstring for a module
+    _CodeSection
 
     """
 
@@ -744,7 +742,7 @@ class ModuleToDoc(_CodeSection):
         PARAMETERS
         ----------
 
-        :param str filepath: TODO: document description for parameter filepath
+        :param str filepath:  filepath for module to document
 
         """
 
@@ -761,13 +759,13 @@ class ModuleToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function name
+        Name of the module (file name)
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function name
-        :rtype: TODO: Document return type for function name
+        :returns: module name
+        :rtype: str
 
         """
 
@@ -780,13 +778,13 @@ class ModuleToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function kind
+        Returns "module"
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function kind
-        :rtype: TODO: Document return type for function kind
+        :returns: "module"
+        :rtype: str
 
         """
 
@@ -798,7 +796,7 @@ class ModuleToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function export
+        Rewrite the file with the docstring changes
 
         """
 
@@ -813,7 +811,7 @@ class ClassToDoc(_CodeSection):
     PURPOSE
     -------
 
-    TODO: Document purpose for class ClassToDoc
+    Class to write docstring for a class
 
     PARENT CLASS
     ------------
@@ -831,21 +829,20 @@ class ClassToDoc(_CodeSection):
       * - __init__
         - undocumented
       * - name
-        - undocumented
+        - Class name
       * - inherited_from
-        - undocumented
+        - Parent class
       * - kind
-        - undocumented
+        - returns "class"
       * - doc
-        - undocumented
+        - Documentation for the class
       * - _get_header
-        - undocumented
+        - Flags first line of class (class class_name():)
 
-    TEMP NOTES
-    ----------
+    PARENT CLASS
+    ------------
 
-    TODO: move these notes into a section with a header
-    Class to write docstring for a class
+    _CodeSection
 
     """
 
@@ -855,7 +852,7 @@ class ClassToDoc(_CodeSection):
         PARAMETERS
         ----------
 
-        :param  code: TODO: document description and type for parameter code
+        :param list[_CodeSection._CodeLine] code:  lines of code in class
 
         """
 
@@ -868,13 +865,13 @@ class ClassToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function name
+        Class name
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function name
-        :rtype: TODO: Document return type for function name
+        :returns: class name
+        :rtype: str
 
         """
 
@@ -887,13 +884,13 @@ class ClassToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function inherited_from
+        Parent class
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function inherited_from
-        :rtype: TODO: Document return type for function inherited_from
+        :returns: parent class name
+        :rtype: str
 
         """
 
@@ -909,13 +906,13 @@ class ClassToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function kind
+        returns "class"
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function kind
-        :rtype: TODO: Document return type for function kind
+        :returns: "class"
+        :rtype: str
 
         """
 
@@ -928,13 +925,13 @@ class ClassToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function doc
+        Documentation for the class
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function doc
-        :rtype: TODO: Document return type for function doc
+        :returns: Documentation with sections PURPOSE, PARENT CLASS (if applicable), CLASSES, FUNCTIONS
+        :rtype: str
 
         """
 
@@ -952,7 +949,7 @@ class ClassToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function _get_header
+        Flags first line of class (class class_name():)
 
         """
 
@@ -969,7 +966,7 @@ class FnToDoc(_CodeSection):
     PURPOSE
     -------
 
-    TODO: Document purpose for class FnToDoc
+    Class to write docstring for a function
 
     PARENT CLASS
     ------------
@@ -985,7 +982,7 @@ class FnToDoc(_CodeSection):
       * - Class Name
         - Purpose
       * - _Parameter
-        - undocumented
+        - A parameter for a function
 
     FUNCTIONS
     ---------
@@ -998,25 +995,25 @@ class FnToDoc(_CodeSection):
       * - __init__
         - undocumented
       * - name
-        - undocumented
+        - Name of the function
       * - kind
-        - undocumented
+        - returns 'function'
       * - doc
-        - undocumented
+        - Documentation for the function
       * - _param_names
-        - undocumented
+        - Names of the function parameters
       * - _find_parameters
-        - undocumented
+        - Finds parameters by looking at code body - also searches for indications of a return, and any raised
+        exceptions
       * - _parse_docstr
-        - undocumented
+        - Parse function docstring for parameters, and return type/details
       * - _get_header
-        - undocumented
+        - Flags first line of function (def fn_name():)
 
-    TEMP NOTES
-    ----------
+    PARENT CLASS
+    ------------
 
-    TODO: move these notes into a section with a header
-    Class to write docstring for a function
+    _CodeSection
 
     """
 
@@ -1026,7 +1023,7 @@ class FnToDoc(_CodeSection):
         PARAMETERS
         ----------
 
-        :param  code: TODO: document description and type for parameter code
+        :param list[_CodeSection._CodeLine] code:  lines of code in function
 
         """
 
@@ -1045,13 +1042,13 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function name
+        Name of the function
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function name
-        :rtype: TODO: Document return type for function name
+        :returns: function name
+        :rtype: str
 
         """
 
@@ -1064,13 +1061,13 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function kind
+        returns 'function'
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function kind
-        :rtype: TODO: Document return type for function kind
+        :returns: 'function'
+        :rtype: str
 
         """
 
@@ -1083,13 +1080,13 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function doc
+        Documentation for the function
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function doc
-        :rtype: TODO: Document return type for function doc
+        :returns: Documentation with sections PURPOSE (unless __init__) and PARAMETERS, CLASSES, FUNCTIONS and
+        :rtype: str
 
         """
 
@@ -1134,13 +1131,13 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function _param_names
+        Names of the function parameters
 
         PARAMETERS
         ----------
 
-        :returns: TODO: Document the return for function _param_names
-        :rtype: TODO: Document return type for function _param_names
+        :returns: List of parameter names
+        :rtype: list[str]
 
         """
 
@@ -1152,7 +1149,7 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function _find_parameters
+        Finds parameters by looking at code body - also searches for indications of a return, and any raised exceptions
 
         """
 
@@ -1177,7 +1174,7 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function _parse_docstr
+        Parse function docstring for parameters, and return type/details
 
         """
 
@@ -1202,7 +1199,7 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for function _get_header
+        Flags first line of function (def fn_name():)
 
         """
 
@@ -1218,7 +1215,7 @@ class FnToDoc(_CodeSection):
         PURPOSE
         -------
 
-        TODO: Document purpose for class _Parameter
+        A parameter for a function
 
         FUNCTIONS
         ---------
@@ -1231,9 +1228,9 @@ class FnToDoc(_CodeSection):
           * - __init__
             - undocumented
           * - name
-            - undocumented
+            - Name of parameter
           * - doc
-            - undocumented
+            - Documents parameter
 
         """
 
@@ -1243,9 +1240,9 @@ class FnToDoc(_CodeSection):
             PARAMETERS
             ----------
 
-            :param  name: TODO: document description and type for parameter name
-            :param  p_type: TODO: document description and type for parameter p_type
-            :param  desc: TODO: document description and type for parameter desc
+            :param str name:  name of the parameter
+            :param str|None p_type :  parameter type (eg str, int etc.)
+            :param str|None desc :  short description of the parameter
 
             """
 
@@ -1260,13 +1257,13 @@ class FnToDoc(_CodeSection):
             PURPOSE
             -------
 
-            TODO: Document purpose for function name
+            Name of parameter
 
             PARAMETERS
             ----------
 
-            :returns: TODO: Document the return for function name
-            :rtype: TODO: Document return type for function name
+            :returns: parameter name
+            :rtype: str
 
             """
 
@@ -1279,13 +1276,13 @@ class FnToDoc(_CodeSection):
             PURPOSE
             -------
 
-            TODO: Document purpose for function doc
+            Documents parameter
 
             PARAMETERS
             ----------
 
-            :returns: TODO: Document the return for function doc
-            :rtype: TODO: Document return type for function doc
+            :returns: {description}
+            :rtype: str
 
             """
 
@@ -1304,23 +1301,21 @@ def main():
     PURPOSE
     -------
 
-    TODO: Document purpose for function main
+    External interface, allowing program to be run from command line, or executable file
 
     """
 
-    parser = argparse.ArgumentParser(description="script to automatically write docstrings for modules and classes")
+    parser = argparse.ArgumentParser(description="Utility for automatically creating and maintaining the framework "
+                                                 "for documenting Python modules")
 
     parser.add_argument("-f", "--filepath", type=str, nargs=1,
                         metavar="file_path", default=None,
-                        help="The file to write docstrings for")
+                        help="The file to write docstrings for - either relative to current location, or absolute")
 
     args = parser.parse_args()
 
     if args.filepath is not None:
         ModuleToDoc(abspath(args.filepath[0])).export()
-    elif sys.argv:
-        for filepath in sys.argv:
-            ModuleToDoc(abspath(filepath))
 
 
 if __name__ == "__main__":

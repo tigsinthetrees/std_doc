@@ -3,7 +3,7 @@ from os.path import abspath
 from os import system, remove
 import unittest
 
-import docstring_writer
+from std_doc import ModuleToDoc
 
 
 class TestDocstringWriterUtil(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestDirectly(TestDocstringWriterUtil):
     @classmethod
     def setUp(cls) -> None:
         super().setUp()
-        cls.parser = docstring_writer.ModuleToDoc(abspath("test_files/test_input.py"))
+        cls.parser = ModuleToDoc(abspath("test_files/test_input.py"))
 
     def test_moduleDocstring_parsedCorrectly(self):
         assert self.parser._docstr_data['TEMP NOTES'] == ('TODO: move these notes into a section with a header\n'
@@ -66,7 +66,7 @@ class TestDirectly(TestDocstringWriterUtil):
 
 class TestCmdLine(TestDocstringWriterUtil):
     def test_runPythonFromCmd(self):
-        script_path = abspath("docstring_writer.py")
+        script_path = abspath("../std_doc/docstring_writer.py")
         system(f"\"{script_path}\" -f test_files/test_input.py")
         pass
         with open("test_files/test_input.py", 'r') as mod_file:
