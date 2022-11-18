@@ -25,7 +25,7 @@ docstring_writer.exe -f "[path to project repo]\tests\test_files\test_input.py"
 ```
 
 ### Running from CMD - using the project files
-If you want to fiddle with the way the docs get written, clone this repository, make your changes ([probably mostly to this file](..std_doc/docstring_writer.py)), and you can run directly from the .py file as follows:
+If you want to fiddle with the way the docs get written, clone this repository, make your changes ([probably mostly to this file](..blob/master/std_doc/docstring_writer.py)), and you can run directly from the .py file as follows:
 ```
 python "[path to project repo]\std_doc\docstring_writer.py" -f [filepath of .py file to document]
 ```
@@ -43,10 +43,10 @@ cd ..
 So... when you run it for the first time, it's gonna throw up a whole bunch of TODOs, to show you where everything should go:
 ![image](https://user-images.githubusercontent.com/101142254/202816368-a0f045ed-1c61-4f1b-b7dc-0c085a439e03.png)
 
-(This is from the [desired output for the tests](../tests/test_files/correct_output.py)
+(This is from the [desired output for the tests](..blob/master/tests/test_files/correct_output.py)
 You'll see here that any existing documentation you've written will be preserved, either under its heading, if you've given it one, or under TEMP NOTES. If you give it a proper heading, it will always be preserved, and it won't raise TODOs
 
-Anyway, once you've done all of the documentation, this is what the PyCharm documentation window will look like ([from docstring_writer.py](..std_doc/docstring_writer.py)):
+Anyway, once you've done all of the documentation, this is what the PyCharm documentation window will look like ([from docstring_writer.py](..blob/master/std_doc/docstring_writer.py)):
 ### Module Docstring
 ![image](https://user-images.githubusercontent.com/101142254/202815675-644bbb40-f63f-4389-84ff-8b4e025ff0a1.png)
 
