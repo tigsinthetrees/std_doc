@@ -1,0 +1,1 @@
+python "C:\Users\Tigs Edmonds\PycharmProjects\autodoc\docstring_writer.py" -f %1
