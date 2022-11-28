@@ -31,12 +31,12 @@ python "[path to project repo]\std_doc\docstring_writer.py" -f [filepath of .py 
 ```
 If you want to create an .exe from your file, just run the following commands (I added them to a .bat file while testing to make my life easier):
 ```
-cd [path to project repo]
-python std_doc\setup.py install
-python std_doc\setup.py py2exe
-cd dist
-docstring_writer.exe -f "[path to project repo]\tests\test_files\test_input.py"
-cd ..
+>> cd [path to project repo]
+>> python std_doc\setup.py install
+>> python std_doc\setup.py py2exe
+>> cd dist
+>> docstring_writer.exe -f "[path to project repo]\tests\test_files\test_input.py"
+>> cd ..
 ```
 
 ## What Do The Results Look Like?
