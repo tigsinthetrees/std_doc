@@ -1,6 +1,29 @@
 """
-Module docstring
+
+PURPOSE
+-------
+
+TODO: Document purpose for module test_input.py
+
+CLASSES
+-------
+
+.. list-table::
+  :header-rows: 1
+
+  * - Class Name
+    - Purpose
+  * - TestClass
+    - Class docstring
+
+TEMP NOTES
+----------
+
+TODO: move these notes into a section with a header
+Unformatted Module docstring
+
 """
+
 from locale import str
 
 
@@ -8,30 +31,50 @@ class TestClass:
     """
 
     PURPOSE
-    --------
+    -------
 
     Class docstring
 
     FUNCTIONS
     ---------
 
-    - test_fn
-    - lorem
-    - ipsum
+    .. list-table::
+      :header-rows: 1
+
+      * - Function Name
+        - Purpose
+      * - test_fn
+        - Function docstring
+      * - undocumented_function
+        - undocumented
+      * - documented_function
+        - Shows how a properly documented function would act
 
     """
 
     def test_fn(self, parameter1: str, parameter2):
         """
-        extra text
 
         PURPOSE
-        --------
+        -------
 
         Function docstring
 
+        PARAMETERS
+        ----------
+
+        :param str parameter1: TODO: document description for parameter parameter1
+        :param  parameter2: TODO: document description and type for parameter parameter2
+        :returns: TODO: Document the return for function test_fn
+        :rtype: TODO: Document return type for function test_fn
+
+        EXCEPTIONS
+        ----------
+
+        AttributeError
+
         TEST TABLE
-        ---- -----
+        ----------
 
         .. list-table::
           :header-rows: 1
@@ -50,13 +93,44 @@ class TestClass:
             - On a stick!
 
         """
+
         pass
         if False:
             raise AttributeError
         return 1
 
     def undocumented_function(self) -> str:
+        """
+
+        PURPOSE
+        -------
+
+        TODO: Document purpose for function undocumented_function
+
+        """
+
         pass
+
+    def documented_function(self, a, b):
+        """
+
+        PURPOSE
+        -------
+
+        Shows how a properly documented function would act
+
+        PARAMETERS
+        ----------
+
+        :param str a: first parameter
+        :param int b: second parameter
+        :returns: Simple string
+        :rtype: str
+
+        """
+
+        print("I can do as I am told" + a + str(b))
+        return "good"
 
 
 print("hello world!")

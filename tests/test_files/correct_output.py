@@ -20,7 +20,7 @@ TEMP NOTES
 ----------
 
 TODO: move these notes into a section with a header
-Module docstring
+Unformatted Module docstring
 
 """
 
@@ -47,6 +47,8 @@ class TestClass:
         - Function docstring
       * - undocumented_function
         - undocumented
+      * - documented_function
+        - Shows how a properly documented function would act
 
     """
 
@@ -90,12 +92,6 @@ class TestClass:
             - 1.99
             - On a stick!
 
-        TEMP NOTES
-        ----------
-
-        TODO: move these notes into a section with a header
-        extra text
-
         """
 
         pass
@@ -114,6 +110,27 @@ class TestClass:
         """
 
         pass
+
+    def documented_function(self, a, b):
+        """
+
+        PURPOSE
+        -------
+
+        Shows how a properly documented function would act
+
+        PARAMETERS
+        ----------
+
+        :param str a: first parameter
+        :param int b: second parameter
+        :returns: Simple string
+        :rtype: str
+
+        """
+
+        print("I can do as I am told" + a + str(b))
+        return "good"
 
 
 print("hello world!")

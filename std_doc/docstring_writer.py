@@ -1096,6 +1096,7 @@ class FnToDoc(_CodeSection):
             purpose_docs = ""
 
         param_contents = ""
+        self._parameters = [p for p in self._parameters if p.name != 'TODO']
         for param in self._parameters:
             param_contents += self._f_line(param.doc)
 
@@ -1156,7 +1157,7 @@ class FnToDoc(_CodeSection):
         inputs = search(r"(?<=\().*(?=\))", self._header.raw).group()
         for param in inputs.split(","):
             p_details = search(r"(\w+)\s?:?\s?(.*)?", param)
-            if p_details.group(1) == "self" or p_details.group(1) in self._param_names:
+            if p_details.group(1) == "self" or p_details.group(1) == "cls" or p_details.group(1) in self._param_names:
                 continue
             self._parameters.append(FnToDoc._Parameter(name=p_details.group(1), p_type=p_details.group(2), desc=None))
         if search(r"(?<=\) ->).*(?=:)", self._header.str_free):
@@ -1188,10 +1189,10 @@ class FnToDoc(_CodeSection):
                                                                desc=p_details.group(3)))
                 if search(r":returns?:", line):
                     self._has_return = True
-                    self._returns = sub(r":.*:", "", line).strip()
+                    self._returns = sub(r":returns?:", "", line).strip()
                 if search(r":rtype:", line):
                     self._has_return = True
-                    self._rtype = sub(r":.*:", "", line).strip()
+                    self._rtype = sub(r":rtype:", "", line).strip()
 
     def _get_header(self):
         """
@@ -1241,8 +1242,8 @@ class FnToDoc(_CodeSection):
             ----------
 
             :param str name:  name of the parameter
-            :param str|None p_type :  parameter type (eg str, int etc.)
-            :param str|None desc :  short description of the parameter
+            :param str|None p_type: parameter type (eg str, int etc.)
+            :param str|None desc: short description of the parameter
 
             """
 
@@ -1292,7 +1293,7 @@ class FnToDoc(_CodeSection):
                 self._desc = f"TODO: document description for parameter {self._name}"
             elif not self._type or self._type == "None":
                 self._desc += f" TODO: document type for parameter {self._name}"
-            return f":param {self._type} {self._name}: {self._desc}"
+            return f":param {self._type.strip()} {self._name}: {self._desc.strip()}"
 
 
 def main():
