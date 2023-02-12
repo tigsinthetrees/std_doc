@@ -28,8 +28,9 @@ class TestDirectly(TestDocstringWriterUtil):
                                                           'Unformatted Module docstring')
 
     def test_findClasses_foundClass(self):
-        assert len(self.parser._classes) == 1
+        assert len(self.parser._classes) == 2
         assert self.parser._classes[0].name == "TestClass"
+        assert self.parser._classes[1].name == "_LinkType"
 
     def test_classDocstring_parsedCorrectly(self):
         assert self.parser._classes[0]._docstr_data['FUNCTIONS'] == "- test_fn\n    - lorem\n    - ipsum"
@@ -43,8 +44,8 @@ class TestDirectly(TestDocstringWriterUtil):
         assert self.parser._classes[0]._fns[2].name == 'documented_function'
 
     def test_fnDocstring_parsedCorrectly(self):
-        self.parser._classes[0]._fns[0].doc
-        self.parser._classes[0]._fns[1].doc
+        assert self.parser._classes[0]._fns[0].doc
+        assert self.parser._classes[0]._fns[1].doc
         assert len(self.parser._classes[0]._fns[1]._parameters) == 0
         assert len(self.parser._classes[0]._fns[0]._parameters) == 2
         assert self.parser._classes[0]._fns[0]._param_names == ['parameter1', 'parameter2']

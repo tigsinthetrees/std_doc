@@ -1,29 +1,8 @@
 """
-
-PURPOSE
--------
-
-TODO: Document purpose for module test_input.py
-
-CLASSES
--------
-
-.. list-table::
-  :header-rows: 1
-
-  * - Class Name
-    - Purpose
-  * - TestClass
-    - Class docstring
-
-TEMP NOTES
-----------
-
-TODO: move these notes into a section with a header
 Unformatted Module docstring
-
 """
 
+import enum
 from locale import str
 
 
@@ -38,17 +17,9 @@ class TestClass:
     FUNCTIONS
     ---------
 
-    .. list-table::
-      :header-rows: 1
-
-      * - Function Name
-        - Purpose
-      * - test_fn
-        - Function docstring
-      * - undocumented_function
-        - undocumented
-      * - documented_function
-        - Shows how a properly documented function would act
+    - test_fn
+    - lorem
+    - ipsum
 
     """
 
@@ -131,6 +102,14 @@ class TestClass:
 
         print("I can do as I am told" + a + str(b))
         return "good"
+
+
+class _LinkType(enum.Enum):
+
+    AUTHOR = "author"
+    SOURCE = "source"
+    UNDEFINED = "undefined"
+    ASSOCIATE = "associate"
 
 
 print("hello world!")

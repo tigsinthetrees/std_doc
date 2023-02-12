@@ -499,8 +499,8 @@ class _CodeSection:
 
         additional_docs = ""
         for subheading, docs in {subheading: docs for subheading, docs in self._docstr_data.items()
-                                 if subheading not in ["PURPOSE", "PARAMETERS",
-                                                       "EXCEPTIONS", "CLASSES", "FUNCTIONS"]}.items():
+                                 if subheading not in ["PURPOSE", "PARAMETERS", "EXCEPTIONS", "CLASSES",
+                                                       "FUNCTIONS", "PARENT CLASS"]}.items():
             additional_docs += self._doc_sect(subheading, docs)
 
         if "PURPOSE" not in self._docstr_data.keys():
@@ -598,7 +598,11 @@ class _CodeSection:
                     self._docstr_data[self._docs[i].raw.strip()] += line.raw
                 last_i = i
             elif i == 0:
-                self._docstr_data["TEMP NOTES"] = ""
+                if not self._docstr_data.get("TEMP NOTES"):
+                    self._docstr_data["TEMP NOTES"] = ""
+                else:
+                    self._docstr_data["TEMP NOTES"] = sub("TODO: move these notes into a section with a header\n", "",
+                                                          self._docstr_data["TEMP NOTES"])
                 for line in self._docs[i: last_i]:
                     self._docstr_data["TEMP NOTES"] += line.raw
 

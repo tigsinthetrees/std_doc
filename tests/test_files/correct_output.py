@@ -15,6 +15,8 @@ CLASSES
     - Purpose
   * - TestClass
     - Class docstring
+  * - _LinkType
+    - undocumented
 
 TEMP NOTES
 ----------
@@ -24,6 +26,7 @@ Unformatted Module docstring
 
 """
 
+import enum
 from locale import str
 
 
@@ -131,6 +134,27 @@ class TestClass:
 
         print("I can do as I am told" + a + str(b))
         return "good"
+
+
+class _LinkType(enum.Enum):
+    """
+
+    PURPOSE
+    -------
+
+    TODO: Document purpose for class _LinkType
+
+    PARENT CLASS
+    ------------
+
+    enum.Enum
+
+    """
+
+    AUTHOR = "author"
+    SOURCE = "source"
+    UNDEFINED = "undefined"
+    ASSOCIATE = "associate"
 
 
 print("hello world!")
