@@ -39,7 +39,7 @@ import argparse
 import importlib.util
 import inspect
 from os.path import abspath
-from re import search, compile, findall, sub
+from re import search, compile, findall, sub, match
 
 
 class _CodeSection:
@@ -138,6 +138,7 @@ class _CodeSection:
         self._docstr_data = {}
         self._parse_docstr()
 
+        self._decorator = ""
         self._exported_status = False
 
     class _CodeLine:
@@ -390,6 +391,14 @@ class _CodeSection:
             return "undocumented"
 
     @property
+    def decorator(self):
+        return self._decorator
+
+    @decorator.setter
+    def decorator(self, decorator_name):
+        self._decorator = decorator_name
+
+    @property
     def doc(self):
         """
 
@@ -491,7 +500,7 @@ class _CodeSection:
         if self._fns:
             fn_contents = (self._f_line(".. list-table::") + self._f_line("  :header-rows: 1") + '\n' +
                            self._f_line("  * - Function Name") + self._f_line("    - Purpose"))
-            for fn in self._fns:
+            for fn in [f for f in self._fns if f.kind is "function" or f.kind is "protected function"]:
                 fn_contents += self._f_line(f"  * - {fn.name}") + self._f_line(f"    - {fn.purpose}")
             fn_docs = self._doc_sect("FUNCTIONS", fn_contents.strip())
         else:
@@ -753,6 +762,7 @@ class ModuleToDoc(_CodeSection):
         module_spec = importlib.util.spec_from_file_location("module_obj", filepath)
         module_obj = importlib.util.module_from_spec(module_spec)
         super().__init__(section_as_text_l=inspect.getsourcelines(module_obj)[0])
+
         self._file_path = filepath
         self._file_name = filepath.rsplit('\\', 1)[1]
 
@@ -793,6 +803,12 @@ class ModuleToDoc(_CodeSection):
         """
 
         return "module"
+
+    def _adjust_for_decs(self):
+        for i, line in enumerate(self._body):
+            if search(r"^@\S*$", line.str_free) and line.belongs_to != self._body[i + 1].belongs_to:
+                line.belongs_to = self._body[i + 1].belongs_to
+                line.belongs_to.decorator = search(r"^@\S*$", line.str_free)
 
     def export(self):
         """
@@ -945,7 +961,24 @@ class ClassToDoc(_CodeSection):
         else:
             parent_docs = ""
 
-        return f"\n{purpose_docs}{parent_docs}{sub_class_docs}{sub_fn_docs}{additional_docs}"
+        prop_list = [f.name for f in self._fns if f.kind is "property"]
+        if prop_list:
+            prop_contents = (self._f_line(".. list-table::") + self._f_line("  :header-rows: 1") + '\n' +
+                             self._f_line("  * - Property Name") + self._f_line("    - Purpose") + self._f_line(
+                        "    - Settable"))
+            for prop in [f for f in self._fns if f.kind is "property"]:
+                prop_list = prop_list[1:]
+                if prop.name in prop_list:
+                    settable = "Yes"
+                else:
+                    settable = "No"
+                prop_contents += (self._f_line(f"  * - {prop.name}") + self._f_line(f"    - {prop._returns}") +
+                                  self._f_line(f"    - {settable}"))
+            prop_docs = self._doc_sect("PROPERTIES", prop_contents.strip())
+        else:
+            prop_docs = ""
+
+        return f"\n{purpose_docs}{parent_docs}{sub_class_docs}{prop_docs}{sub_fn_docs}{additional_docs}"
 
     def _get_header(self):
         """
@@ -1074,8 +1107,18 @@ class FnToDoc(_CodeSection):
         :rtype: str
 
         """
-
-        return "function"
+        if match(r"__init__", self.name):
+            return "initiator function"
+        elif match(r"__\w*__", self.name):
+            return "special function"
+        elif self.decorator == "@property" or search(r"^@\w*\.setter", self.decorator):
+            return "property"
+        elif self.decorator:
+            return "decorated function"
+        elif search(r"^_", self.name):
+            return "protected function"
+        else:
+            return "function"
 
     @property
     def doc(self):
@@ -1096,7 +1139,7 @@ class FnToDoc(_CodeSection):
 
         purpose_docs, sub_class_docs, sub_fn_docs, additional_docs = self._base_docs()
 
-        if self.name == "__init__":
+        if self.name == "__init__" or self.decorator == "@property" or search(r"^@\w*\.setter", self.decorator):
             purpose_docs = ""
 
         param_contents = ""

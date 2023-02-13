@@ -55,6 +55,18 @@ class TestClass:
 
     """
 
+    def __init__(self, a_parameter):
+        """
+
+        PARAMETERS
+        ----------
+
+        :param  a_parameter: TODO: document description and type for parameter a_parameter
+
+        """
+
+        self._test_param = a_parameter
+
     def test_fn(self, parameter1: str, parameter2):
         """
 

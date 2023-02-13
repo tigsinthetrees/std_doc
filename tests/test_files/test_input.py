@@ -22,6 +22,9 @@ class TestClass:
     - ipsum
 
     """
+    
+    def __init__(self, a_parameter):
+        self._test_param = a_parameter
 
     def test_fn(self, parameter1: str, parameter2):
         """
@@ -71,16 +74,19 @@ class TestClass:
         return 1
 
     def undocumented_function(self) -> str:
-        """
-
-        PURPOSE
-        -------
-
-        TODO: Document purpose for function undocumented_function
-
-        """
-
         pass
+
+    @property
+    def read_only(self):
+        return self._test_param
+
+    @property
+    def read_write(self):
+        return self._test_param
+
+    @read_write.setter
+    def read_write(self, j):
+        self._test_param = j
 
     def documented_function(self, a, b):
         """
